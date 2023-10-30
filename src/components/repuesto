@@ -1,0 +1,26 @@
+import { useState } from "react"
+export function Comenter(props){
+  const [ newComment, setNewComment ] = useState('')
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    props.createNewComment(newComment)
+    localStorage.setItem('thecomments', newComment)
+    setNewComment('')
+  }
+  
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="comentario"
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+        />
+        <button>Comenta</button>
+      </form>
+    </div>
+  );
+}
+export default Comenter

@@ -1,0 +1,43 @@
+import { useEffect, useState } from "react";
+import "./App.css";
+import { Comenter }from './components/Comenter'
+
+function App() {
+
+  const [ coments, setComents ] = useState([
+    {coment:'juntada con amigos y familia', user:'bagley'},
+    {coment:'la mejor pelota ¿es la de ben diez?', user:'milei'},
+    {coment:'no se usar la computadora', user:'juancarlos'},
+    {coment:'me atragante con un fideo', user:'el rayo mcqueen'},
+  ])
+
+  function createNewComment(newComment){
+    setComents([...coments, {coment: newComment}])
+  }
+
+  useEffect(() => {
+    let data = localStorage.getItem('thecomments')
+    if (data) {
+      setComents(JSON.parse(data))
+    }
+  }, [])
+
+  useEffect(() =>{
+    localStorage.setItem('thecomments', JSON.stringify(coments))
+  }, [ coments ])
+
+  return(
+    <div>
+      <Comenter createNewComment={createNewComment}/>
+      <div className="postContenedor">
+          {coments.map(coment => (
+            <div>
+              <p className="post">{coment.coment}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+  )
+}
+
+export default App;
